@@ -1,7 +1,9 @@
 <?php
 
-require 'src/RR/Shunt/Parser.php';
-require 'src/RR/Shunt/Context.php';
+// Composer autoloading
+if (file_exists('vendor/autoload.php')) {
+    $loader = include 'vendor/autoload.php';
+}
 
 use RR\Shunt\Parser;
 use RR\Shunt\Context;
