@@ -34,7 +34,7 @@ class ConstantDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $context = new Context();
 
-        $context->def('const', 'Just a String That Causese Error #$#$%#@');
+        $context->def('const', 'Just a String That Causes Error #$#$%#@');
     }
 
     /**

@@ -48,7 +48,7 @@ class FunctionDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $context = new Context();
 
-        $context->def('abs', 'Just a String That Causese Error #$#$%#@');
+        $context->def('abs', 'Just a String That Causes Error #$#$%#@');
     }
 
     /**

@@ -312,4 +312,3 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
         $scanner = new Scanner($term);
     }
 }
- 
