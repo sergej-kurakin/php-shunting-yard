@@ -5,6 +5,11 @@ php:
   - 5.4
   - 5.5
 
+branches:
+  only:
+    - master
+    - dev
+
 script: phpunit --coverage-text
 
 install: composer install
