@@ -32,9 +32,8 @@
 
 namespace RR\Shunt;
 
-use \Exception;
-
-class RuntimeError extends Exception {}
+use Exception;
+use RR\Shunt\Exception\RuntimeError;
 
 class Context
 {

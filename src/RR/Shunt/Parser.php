@@ -33,6 +33,7 @@
 namespace RR\Shunt;
 
 use \Exception;
+use RR\Shunt\Exception\RuntimeError;
 
 class SyntaxError extends Exception {}
 class ParseError extends Exception {}

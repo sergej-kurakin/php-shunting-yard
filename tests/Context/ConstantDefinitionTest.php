@@ -4,7 +4,7 @@ namespace tests\Context;
 
 use RR\Shunt\Parser;
 use RR\Shunt\Context;
-use RR\Shunt\RuntimeError;
+use RR\Shunt\Exception\RuntimeError;
 use Exception;
 
 class ConstantDefinitionTest extends \PHPUnit_Framework_TestCase
@@ -38,7 +38,7 @@ class ConstantDefinitionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RR\Shunt\RuntimeError
+     * @expectedException \RR\Shunt\Exception\RuntimeError
      */
     public function testCallNotsetConstantCausesException()
     {

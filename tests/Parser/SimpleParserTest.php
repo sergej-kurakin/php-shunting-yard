@@ -3,7 +3,7 @@
 namespace tests\Parser;
 
 use RR\Shunt\Parser;
-use RR\Shunt\RuntimeError;
+use RR\Shunt\Exception\RuntimeError;
 
 class SimpleParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -60,7 +60,7 @@ class SimpleParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RR\Shunt\RuntimeError
+     * @expectedException \RR\Shunt\Exception\RuntimeError
      */
     public function testDivisionFromZero()
     {
@@ -70,7 +70,7 @@ class SimpleParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RR\Shunt\RuntimeError
+     * @expectedException \RR\Shunt\Exception\RuntimeError
      */
     public function testModulusFromZero()
     {

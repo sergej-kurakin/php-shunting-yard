@@ -30,8 +30,8 @@
  * <http://opensource.org/licenses/mit-license.php>
  */
 
-namespace RR\Shunt;
+namespace RR\Shunt\Exception;
 
-use \Exception;
+use Exception;
 
 class RuntimeError extends Exception {}
