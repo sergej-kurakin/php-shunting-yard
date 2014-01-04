@@ -9,16 +9,56 @@ use Exception;
 class ConstantDefinitionTest extends \PHPUnit_Framework_TestCase
 {
 
-    public function testConstantDefinitionAndCall()
+    /**
+     * @param $value
+     * @param $expected
+     *
+     * @dataProvider constantsProvider
+     */
+    public function testConstantDefinitionAndCall($value, $expected)
     {
         $context = new Context();
 
-        $context->def('const', 3);
+        $context->def('const', $value);
 
         $actual = $context->cs('const');
 
-        $this->assertEquals(3.0, $actual);
+        $this->assertEquals($expected, $actual);
 
+    }
+
+    public function constantsProvider()
+    {
+        return array(
+            array(
+                3,
+                3.0,
+            ),
+            array(
+                '3',
+                3.0,
+            ),
+            array(
+                3.2,
+                3.2,
+            ),
+            array(
+                '3.2',
+                3.2,
+            ),
+            array(
+                0.2,
+                0.2,
+            ),
+            array(
+                '0.2',
+                0.2,
+            ),
+            array(
+                '.2',
+                0.2,
+            ),
+        );
     }
 
     /**
