@@ -2,18 +2,12 @@
 
 namespace tests\Context;
 
-use RR\Shunt\Parser;
 use RR\Shunt\Context;
 use RR\Shunt\Exception\RuntimeError;
 use Exception;
 
 class ConstantDefinitionTest extends \PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-        Parser::parse('2+2');
-    }
 
     public function testConstantDefinitionAndCall()
     {

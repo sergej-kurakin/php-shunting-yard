@@ -2,19 +2,12 @@
 
 namespace tests;
 
-use RR\Shunt\Parser;
 use RR\Shunt\Scanner;
 use RR\Shunt\Token;
 use RR\Shunt\Exception\SyntaxError;
 
 class ScannerTest extends \PHPUnit_Framework_TestCase
 {
-
-    public function setUp()
-    {
-        Parser::parse('2+2');
-    }
-
     /**
      * @param $term
      * @param $expected
@@ -23,9 +16,6 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
      */
     public function testScanner($term, $expected)
     {
-
-        Parser::parse('2+2');
-
         $scanner = new Scanner($term);
 
         $tokens = array();
@@ -39,8 +29,6 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
 
     public function terms()
     {
-        Parser::parse('2+2');
-
         return array(
             // Simple math
             array(
@@ -305,8 +293,6 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
      */
     public function testForSyntaxErrorExceptionWithWrongInput()
     {
-        Parser::parse('2+2');
-
         $term = '2&2';
 
         $scanner = new Scanner($term);
