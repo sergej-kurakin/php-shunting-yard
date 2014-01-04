@@ -43,7 +43,19 @@ class ParserTest extends \PHPUnit_Framework_TestCase
             array(
                 '3 + 4 * 2 / ( 1 - 5 ) ^ 2 ^ 3',
                 3.0001220703125,
-            )
+            ),
+            array(
+                '3*(3+4)^(1+2)',
+                1029.0,
+            ),
+            array(
+                '4^(-2)',
+                0.0625,
+            ),
+            array(
+                '4^-2',
+                0.0625,
+            ),
         );
     }
 
