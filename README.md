@@ -1,5 +1,7 @@
-[![Master Build Status](https://travis-ci.org/sergej-kurakin/php-shunting-yard.png?branch=master)](https://travis-ci.org/sergej-kurakin/php-shunting-yard)
-[![Dev Build Status](https://travis-ci.org/sergej-kurakin/php-shunting-yard.png?branch=dev)](https://travis-ci.org/sergej-kurakin/php-shunting-yard)
+### PHP Shunting Yard Implementation
+
+Master: [![Master Build Status](https://travis-ci.org/sergej-kurakin/php-shunting-yard.png?branch=master)](https://travis-ci.org/sergej-kurakin/php-shunting-yard)
+Develop: [![Dev Build Status](https://travis-ci.org/sergej-kurakin/php-shunting-yard.png?branch=dev)](https://travis-ci.org/sergej-kurakin/php-shunting-yard)
 
 # MIT Licence
 
