@@ -16,6 +16,9 @@ echo $result; //3.0001220703125
 
 Equation with constants and functions
 ```php
+use RR\Shunt\Parser;
+use RR\Shunt\Context;
+
 $ctx = new Context();
 $ctx->def('abs'); // wrapper for PHP "abs" function
 $ctx->def('foo', 5); // constant "foo" with value "5"
