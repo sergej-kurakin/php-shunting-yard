@@ -55,4 +55,22 @@ class FunctionDefinitionTest extends \PHPUnit_Framework_TestCase
         $context->fn('notdefinedfunction', array(-3));
     }
 
+    public function testFunctionDefinitionWithOptionalParams()
+    {
+        $context = new Context();
+
+        $context->def('func', function ($param1, $param2 = 100) {
+                return ($param1 + $param2);
+            });
+
+        $actual = $context->fn('func', array(3));
+
+        $this->assertEquals(103.0, $actual);
+
+        $actual = $context->fn('func', array(3, 200));
+
+        $this->assertEquals(203.0, $actual);
+
+    }
+
 }
