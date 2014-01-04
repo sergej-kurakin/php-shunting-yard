@@ -5,8 +5,8 @@ namespace tests\Parser;
 use RR\Shunt\Parser;
 use RR\Shunt\RuntimeError;
 
-class FailingParenthesisParserTest extends \PHPUnit_Framework_TestCase {
-
+class FailingParenthesisParserTest extends \PHPUnit_Framework_TestCase
+{
     /**
      * @expectedException \RR\Shunt\RuntimeError
      */
@@ -18,4 +18,3 @@ class FailingParenthesisParserTest extends \PHPUnit_Framework_TestCase {
     }
 
 }
- 

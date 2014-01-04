@@ -17,7 +17,7 @@ class ConstantsParserTest extends \PHPUnit_Framework_TestCase
     /**
      * @param $equation
      * @param array $constants
-     * @param $expected
+     *                         @param $expected
      *
      * @dataProvider equationAndConstantsProvider
      */
@@ -108,4 +108,3 @@ class ConstantsParserTest extends \PHPUnit_Framework_TestCase
     }
 
 }
- 
