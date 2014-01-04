@@ -22,7 +22,7 @@ $ctx->def('foo', 5); // constant "foo" with value "5"
 $ctx->def('bar', function($a, $b) { return $a * $b; }); // define function
 
 $equation = '3 + bar(4, 2) / (abs(-1) - foo) ^ 2 ^ 3';
-$result Parser::parse($equation, $ctx);
+$result = Parser::parse($equation, $ctx);
 echo $result; //3.0001220703125
 ```
 
