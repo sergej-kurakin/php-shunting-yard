@@ -56,6 +56,16 @@ class SimpleParserTest extends \PHPUnit_Framework_TestCase
                 '4^-2',
                 0.0625,
             ),
+
+            // exclamation / not
+            array(
+                '!1',
+                0,
+            ),
+            array(
+                '!0',
+                1,
+            ),
         );
     }
 
