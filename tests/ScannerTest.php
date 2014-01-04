@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: monika
- * Date: 1/4/14
- * Time: 1:40 AM
- */
 
 namespace tests;
 
@@ -13,7 +7,8 @@ use RR\Shunt\Scanner;
 use RR\Shunt\Token;
 use RR\Shunt\SyntaxError;
 
-class ScannerTest extends \PHPUnit_Framework_TestCase {
+class ScannerTest extends \PHPUnit_Framework_TestCase
+{
 
     public function setUp()
     {
