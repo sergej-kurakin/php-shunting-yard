@@ -53,17 +53,6 @@ const T_NUMBER      = 1,  // eine nummer (integer / double)
       T_UNARY_MINUS = 72, // - als vorzeichen (zur übersetzungszeit ermittelt)
       T_NOT         = 73; // ! als vorzeichen
 
-class Token
-{
-  public $type, $value, $argc = 0;
-
-  public function __construct($type, $value)
-  {
-    $this->type  = $type;
-    $this->value = $value;
-  }
-}
-
 class Parser
 {
   const ST_1 = 1, // wartet auf operand oder unäre vorzeichen
