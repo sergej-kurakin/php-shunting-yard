@@ -21,7 +21,7 @@ class ConstantsParserTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider equationAndConstantsProvider
      */
-    public function testParserWithVariables($equation, array $constants, $expected)
+    public function testParserWithConstants($equation, array $constants, $expected)
     {
         $context = new Context();
 
