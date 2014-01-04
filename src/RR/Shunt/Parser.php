@@ -36,23 +36,6 @@ use RR\Shunt\Exception\RuntimeError;
 use RR\Shunt\Exception\ParseError;
 use RR\Shunt\Exception\SyntaxError;
 
-const T_NUMBER      = 1,  // eine nummer (integer / double)
-      T_IDENT       = 2,  // konstante
-      T_FUNCTION    = 4,  // funktion
-      T_POPEN       = 8,  // (
-      T_PCLOSE      = 16,  // )
-      T_COMMA       = 32, // ,
-      T_OPERATOR    = 64, // operator (derzeit ungenutzt)
-      T_PLUS        = 65, // +
-      T_MINUS       = 66, // -
-      T_TIMES       = 67, // *
-      T_DIV         = 68, // /
-      T_MOD         = 69, // %
-      T_POW         = 70, // ^
-      T_UNARY_PLUS  = 71, // + als vorzeichen (zur übersetzungszeit ermittelt)
-      T_UNARY_MINUS = 72, // - als vorzeichen (zur übersetzungszeit ermittelt)
-      T_NOT         = 73; // ! als vorzeichen
-
 class Parser
 {
   const ST_1 = 1, // wartet auf operand oder unäre vorzeichen
@@ -76,7 +59,7 @@ class Parser
     // When there are no more tokens to read:
     // While there are still operator tokens in the stack:
     while ($t = array_pop($this->stack)) {
-      if ($t->type === T_POPEN || $t->type === T_PCLOSE)
+      if ($t->type === Token::T_POPEN || $t->type === Token::T_PCLOSE)
         throw new ParseError('parser fehler: fehlerhafte verschachtelung von `(` und `)`');
 
       $this->queue[] = $t;
@@ -92,11 +75,11 @@ class Parser
     // Read the next token from input.
     while ($t = array_shift($this->queue)) {
       switch ($t->type) {
-        case T_NUMBER:
-        case T_IDENT:
+        case Token::T_NUMBER:
+        case Token::T_IDENT:
           // wert einer konstanten ermitteln
-          if ($t->type === T_IDENT)
-            $t = new Token(T_NUMBER, $ctx->cs($t->value));
+          if ($t->type === Token::T_IDENT)
+            $t = new Token(Token::T_NUMBER, $ctx->cs($t->value));
 
           // If the token is a value or identifier
           // Push it onto the stack.
@@ -104,15 +87,15 @@ class Parser
           ++$len;
           break;
 
-        case T_PLUS:
-        case T_MINUS:
-        case T_UNARY_PLUS:
-        case T_UNARY_MINUS:
-        case T_TIMES:
-        case T_DIV:
-        case T_MOD:
-        case T_POW:
-        case T_NOT:
+        case Token::T_PLUS:
+        case Token::T_MINUS:
+        case Token::T_UNARY_PLUS:
+        case Token::T_UNARY_MINUS:
+        case Token::T_TIMES:
+        case Token::T_DIV:
+        case Token::T_MOD:
+        case Token::T_POW:
+        case Token::T_NOT:
           // It is known a priori that the operator takes n arguments.
           $na = $this->argc($t);
 
@@ -132,10 +115,10 @@ class Parser
           $len -= $na - 1;
 
           // Push the returned results, if any, back onto the stack.
-          $this->stack[] = new Token(T_NUMBER, $this->op($t->type, $lhs, $rhs));
+          $this->stack[] = new Token(Token::T_NUMBER, $this->op($t->type, $lhs, $rhs));
           break;
 
-        case T_FUNCTION:
+        case Token::T_FUNCTION:
           // function
           $argc = $t->argc;
           $argv = array();
@@ -146,7 +129,7 @@ class Parser
             array_unshift($argv, array_pop($this->stack)->value);
 
           // Push the returned results, if any, back onto the stack.
-          $this->stack[] = new Token(T_NUMBER, $ctx->fn($t->value, $argv));
+          $this->stack[] = new Token(Token::T_NUMBER, $ctx->fn($t->value, $argv));
           break;
 
         default:
@@ -171,29 +154,29 @@ class Parser
       $rhs = $rhs->value;
 
       switch ($op) {
-        case T_PLUS:
+        case Token::T_PLUS:
           return $lhs + $rhs;
 
-        case T_MINUS:
+        case Token::T_MINUS:
           return $lhs - $rhs;
 
-        case T_TIMES:
+        case Token::T_TIMES:
           return $lhs * $rhs;
 
-        case T_DIV:
+        case Token::T_DIV:
           if ($rhs === 0.)
             throw new RuntimeError('laufzeit fehler: teilung durch 0');
 
           return $lhs / $rhs;
 
-        case T_MOD:
+        case Token::T_MOD:
           if ($rhs === 0.)
             throw new RuntimeError('laufzeit fehler: rest-teilung durch 0');
 
           // php (bzw. c) kann hier nur mit ganzzahlen umgehen
           return (float) $lhs % $rhs;
 
-        case T_POW:
+        case Token::T_POW:
           return (float) pow($lhs, $rhs);
       }
 
@@ -202,13 +185,13 @@ class Parser
     }
 
     switch ($op) {
-      case T_NOT:
+      case Token::T_NOT:
         return (float) !$rhs->value;
 
-      case T_UNARY_MINUS:
+      case Token::T_UNARY_MINUS:
         return -$rhs->value;
 
-      case T_UNARY_PLUS:
+      case Token::T_UNARY_PLUS:
         return +$rhs->value;
     }
   }
@@ -216,12 +199,12 @@ class Parser
   protected function argc(Token $t)
   {
     switch ($t->type) {
-      case T_PLUS:
-      case T_MINUS:
-      case T_TIMES:
-      case T_DIV:
-      case T_MOD:
-      case T_POW:
+      case Token::T_PLUS:
+      case Token::T_MINUS:
+      case Token::T_TIMES:
+      case Token::T_DIV:
+      case Token::T_MOD:
+      case Token::T_POW:
         return 2;
     }
 
@@ -241,8 +224,8 @@ class Parser
       $val = $t->value;
 
       switch ($t->type) {
-        case T_UNARY_MINUS:
-        case T_UNARY_PLUS:
+        case Token::T_UNARY_MINUS:
+        case Token::T_UNARY_PLUS:
           $val = 'unary' . $val;
           break;
       }
@@ -260,16 +243,16 @@ class Parser
     $argc = 0;
     $next = $this->scanner->peek();
 
-    if ($next && $next->type !== T_PCLOSE) {
+    if ($next && $next->type !== Token::T_PCLOSE) {
       $argc = 1;
 
       while ($t = $this->scanner->next()) {
         $this->handle($t);
 
-        if ($t->type === T_PCLOSE)
+        if ($t->type === Token::T_PCLOSE)
           break;
 
-        if ($t->type === T_COMMA)
+        if ($t->type === Token::T_COMMA)
           ++$argc;
       }
     }
@@ -280,27 +263,27 @@ class Parser
   protected function handle(Token $t)
   {
     switch ($t->type) {
-      case T_NUMBER:
-      case T_IDENT:
+      case Token::T_NUMBER:
+      case Token::T_IDENT:
         // If the token is a number (identifier), then add it to the output queue.
         $this->queue[] = $t;
         $this->state = self::ST_2;
         break;
 
-      case T_FUNCTION:
+      case Token::T_FUNCTION:
         // If the token is a function token, then push it onto the stack.
         $this->stack[] = $t;
         $this->fargs($t);
         break;
 
 
-      case T_COMMA:
+      case Token::T_COMMA:
         // If the token is a function argument separator (e.g., a comma):
 
         $pe = false;
 
         while ($t = end($this->stack)) {
-          if ($t->type === T_POPEN) {
+          if ($t->type === Token::T_POPEN) {
             $pe = true;
             break;
           }
@@ -318,15 +301,15 @@ class Parser
         break;
 
       // If the token is an operator, op1, then:
-      case T_PLUS:
-      case T_MINUS:
-      case T_UNARY_PLUS:
-      case T_UNARY_MINUS:
-      case T_TIMES:
-      case T_DIV:
-      case T_MOD:
-      case T_POW:
-      case T_NOT:
+      case Token::T_PLUS:
+      case Token::T_MINUS:
+      case Token::T_UNARY_PLUS:
+      case Token::T_UNARY_MINUS:
+      case Token::T_TIMES:
+      case Token::T_DIV:
+      case Token::T_MOD:
+      case Token::T_POW:
+      case Token::T_NOT:
         while (!empty($this->stack)) {
           $s = end($this->stack);
 
@@ -340,15 +323,15 @@ class Parser
           switch ($s->type) {
             default: break 2;
 
-            case T_PLUS:
-            case T_MINUS:
-            case T_UNARY_PLUS:
-            case T_UNARY_MINUS:
-            case T_TIMES:
-            case T_DIV:
-            case T_MOD:
-            case T_POW:
-            case T_NOT:
+            case Token::T_PLUS:
+            case Token::T_MINUS:
+            case Token::T_UNARY_PLUS:
+            case Token::T_UNARY_MINUS:
+            case Token::T_TIMES:
+            case Token::T_DIV:
+            case Token::T_MOD:
+            case Token::T_POW:
+            case Token::T_NOT:
               $p1 = $this->preced($t);
               $p2 = $this->preced($s);
 
@@ -365,20 +348,20 @@ class Parser
         $this->state = self::ST_1;
         break;
 
-      case T_POPEN:
+      case Token::T_POPEN:
         // If the token is a left parenthesis, then push it onto the stack.
         $this->stack[] = $t;
         $this->state = self::ST_1;
         break;
 
       // If the token is a right parenthesis:
-      case T_PCLOSE:
+      case Token::T_PCLOSE:
         $pe = false;
 
         // Until the token at the top of the stack is a left parenthesis,
         // pop operators off the stack onto the output queue
         while ($t = array_pop($this->stack)) {
-          if ($t->type === T_POPEN) {
+          if ($t->type === Token::T_POPEN) {
             // Pop the left parenthesis from the stack, but not onto the output queue.
             $pe = true;
             break;
@@ -392,7 +375,7 @@ class Parser
           throw new ParseError('parser fehler: unerwarteter token `)`');
 
         // If the token at the top of the stack is a function token, pop it onto the output queue.
-        if (($t = end($this->stack)) && $t->type === T_FUNCTION)
+        if (($t = end($this->stack)) && $t->type === Token::T_FUNCTION)
           $this->queue[] = array_pop($this->stack);
 
         $this->state = self::ST_2;
@@ -406,19 +389,19 @@ class Parser
   protected function assoc(Token $t)
   {
     switch ($t->type) {
-      case T_TIMES:
-      case T_DIV:
-      case T_MOD:
+      case Token::T_TIMES:
+      case Token::T_DIV:
+      case Token::T_MOD:
 
-      case T_PLUS:
-      case T_MINUS:
+      case Token::T_PLUS:
+      case Token::T_MINUS:
         return 1; //ltr
 
-      case T_NOT:
-      case T_UNARY_PLUS:
-      case T_UNARY_MINUS:
+      case Token::T_NOT:
+      case Token::T_UNARY_PLUS:
+      case Token::T_UNARY_MINUS:
 
-      case T_POW:
+      case Token::T_POW:
         return 2; //rtl
     }
 
@@ -429,21 +412,21 @@ class Parser
   protected function preced(Token $t)
   {
     switch ($t->type) {
-      case T_NOT:
-      case T_UNARY_PLUS:
-      case T_UNARY_MINUS:
+      case Token::T_NOT:
+      case Token::T_UNARY_PLUS:
+      case Token::T_UNARY_MINUS:
         return 4;
 
-      case T_POW:
+      case Token::T_POW:
         return 3;
 
-      case T_TIMES:
-      case T_DIV:
-      case T_MOD:
+      case Token::T_TIMES:
+      case Token::T_DIV:
+      case Token::T_MOD:
         return 2;
 
-      case T_PLUS:
-      case T_MINUS:
+      case Token::T_PLUS:
+      case Token::T_MINUS:
         return 1;
     }
 
@@ -469,21 +452,21 @@ class Scanner
   protected $tokens = array( 0 );
 
   protected $lookup = array(
-    '+' => T_PLUS,
-    '-' => T_MINUS,
-    '/' => T_DIV,
-    '%' => T_MOD,
-    '^' => T_POW,
-    '*' => T_TIMES,
-    '(' => T_POPEN,
-    ')' => T_PCLOSE,
-    '!' => T_NOT,
-    ',' => T_COMMA
+    '+' => Token::T_PLUS,
+    '-' => Token::T_MINUS,
+    '/' => Token::T_DIV,
+    '%' => Token::T_MOD,
+    '^' => Token::T_POW,
+    '*' => Token::T_TIMES,
+    '(' => Token::T_POPEN,
+    ')' => Token::T_PCLOSE,
+    '!' => Token::T_NOT,
+    ',' => Token::T_COMMA
   );
 
   public function __construct($input)
   {
-    $prev = new Token(T_OPERATOR, 'noop');
+    $prev = new Token(Token::T_OPERATOR, 'noop');
 
     while (trim($input) !== '') {
       if (!preg_match(self::PATTERN, $input, $match)) {
@@ -505,32 +488,32 @@ class Scanner
       }
 
       if (is_numeric($value)) {
-        if ($prev->type === T_PCLOSE)
-          $this->tokens[] = new Token(T_TIMES, '*');
+        if ($prev->type === Token::T_PCLOSE)
+          $this->tokens[] = new Token(Token::T_TIMES, '*');
 
-        $this->tokens[] = $prev = new Token(T_NUMBER, (float) $value);
+        $this->tokens[] = $prev = new Token(Token::T_NUMBER, (float) $value);
         continue;
       }
 
-      switch ($type = isset($this->lookup[$value]) ? $this->lookup[$value] : T_IDENT) {
-        case T_PLUS:
-          if ($prev->type & T_OPERATOR || $prev->type == T_POPEN) $type = T_UNARY_PLUS;
+      switch ($type = isset($this->lookup[$value]) ? $this->lookup[$value] : Token::T_IDENT) {
+        case Token::T_PLUS:
+          if ($prev->type & Token::T_OPERATOR || $prev->type == Token::T_POPEN) $type = Token::T_UNARY_PLUS;
           break;
 
-        case T_MINUS:
-          if ($prev->type & T_OPERATOR || $prev->type == T_POPEN) $type = T_UNARY_MINUS;
+        case Token::T_MINUS:
+          if ($prev->type & Token::T_OPERATOR || $prev->type == Token::T_POPEN) $type = Token::T_UNARY_MINUS;
           break;
 
-        case T_POPEN:
+        case Token::T_POPEN:
           switch ($prev->type) {
-            case T_IDENT:
-              $prev->type = T_FUNCTION;
+            case Token::T_IDENT:
+              $prev->type = Token::T_FUNCTION;
               break;
 
-            case T_NUMBER:
-            case T_PCLOSE:
+            case Token::T_NUMBER:
+            case Token::T_PCLOSE:
               // erlaubt 2(2) -> 2 * 2 | (2)(2) -> 2 * 2
-              $this->tokens[] = new Token(T_TIMES, '*');
+              $this->tokens[] = new Token(Token::T_TIMES, '*');
               break;
           }
 
