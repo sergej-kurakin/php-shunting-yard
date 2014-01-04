@@ -37,36 +37,39 @@ use RR\Shunt\Exception\RuntimeError;
 
 class Context
 {
-  protected $fnt = array(), $cst = array( 'PI' => M_PI, 'π' => M_PI );
+    protected $fnt = array(), $cst = array('PI' => M_PI, 'π' => M_PI);
 
-  public function fn($name, array $args)
-  {
-    if (!isset($this->fnt[$name]))
-      throw new RuntimeError('laufzeit fehler: undefinierte funktion "' . $name . '"');
+    public function fn($name, array $args)
+    {
+        if (!isset($this->fnt[$name])) {
+            throw new RuntimeError('laufzeit fehler: undefinierte funktion "' . $name . '"');
+        }
 
-    return (float) call_user_func_array($this->fnt[$name], $args);
-  }
+        return (float) call_user_func_array($this->fnt[$name], $args);
+    }
 
-  public function cs($name)
-  {
-    if (!isset($this->cst[$name]))
-      throw new RuntimeError('laufzeit fehler: undefinierte konstante "' . $name . '"');
+    public function cs($name)
+    {
+        if (!isset($this->cst[$name])) {
+            throw new RuntimeError('laufzeit fehler: undefinierte konstante "' . $name . '"');
+        }
 
-    return $this->cst[$name];
-  }
+        return $this->cst[$name];
+    }
 
-  public function def($name, $value = null)
-  {
-    // einfacher wrapper
-    if ($value === null) $value = $name;
+    public function def($name, $value = null)
+    {
+        // einfacher wrapper
+        if ($value === null) {
+            $value = $name;
+        }
 
-    if (is_callable($value))
-      $this->fnt[$name] = $value;
-
-    elseif (is_numeric($value))
-      $this->cst[$name] = (float) $value;
-
-    else
-      throw new Exception('funktion oder nummer erwartet');
-  }
+        if (is_callable($value)) {
+            $this->fnt[$name] = $value;
+        } elseif (is_numeric($value)) {
+            $this->cst[$name] = (float) $value;
+        } else {
+            throw new Exception('funktion oder nummer erwartet');
+        }
+    }
 }
