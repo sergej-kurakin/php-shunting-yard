@@ -5,7 +5,7 @@ namespace tests;
 use RR\Shunt\Parser;
 use RR\Shunt\RuntimeError;
 
-class ParserTest extends \PHPUnit_Framework_TestCase
+class SimpleParserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
