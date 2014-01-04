@@ -58,15 +58,4 @@ class SimpleParserTest extends \PHPUnit_Framework_TestCase
             ),
         );
     }
-
-    /**
-     * @expectedException \RR\Shunt\RuntimeError
-     */
-    public function testParenthesisThrowsError()
-    {
-        $equation = '()';
-
-        Parser::parse($equation);
-    }
-
 }
