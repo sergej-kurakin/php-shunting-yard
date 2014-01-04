@@ -1,6 +1,6 @@
 <?php
 
-namespace tests;
+namespace tests\Parser;
 
 use RR\Shunt\Parser;
 use RR\Shunt\RuntimeError;
