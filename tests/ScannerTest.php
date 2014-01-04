@@ -80,6 +80,64 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
                 ),
             ),
 
+            // floats
+            array(
+                '2.13+3.78',
+                array(
+                    new Token(1, 2.13),
+                    new Token(65, '+'),
+                    new Token(1, 3.78),
+                ),
+            ),
+            array(
+                '2.13-3.78',
+                array(
+                    new Token(1, 2.13),
+                    new Token(66, '-'),
+                    new Token(1, 3.78),
+                ),
+            ),
+            array(
+                '2.13*3.78',
+                array(
+                    new Token(1, 2.13),
+                    new Token(67, '*'),
+                    new Token(1, 3.78),
+                ),
+            ),
+            array(
+                '2.13/3.78',
+                array(
+                    new Token(1, 2.13),
+                    new Token(68, '/'),
+                    new Token(1, 3.78),
+                ),
+            ),
+            array(
+                '2.13%3.78',
+                array(
+                    new Token(1, 2.13),
+                    new Token(69, '%'),
+                    new Token(1, 3.78),
+                ),
+            ),
+            array(
+                '2.13^3.78',
+                array(
+                    new Token(1, 2.13),
+                    new Token(70, '^'),
+                    new Token(1, 3.78),
+                ),
+            ),
+            array(
+                '2.^.78',
+                array(
+                    new Token(1, 2.0),
+                    new Token(70, '^'),
+                    new Token(1, 0.78),
+                ),
+            ),
+
             // parenthesis
             array(
                 '3*(2+3)',
