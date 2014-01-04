@@ -32,11 +32,9 @@
 
 namespace RR\Shunt;
 
-use \Exception;
 use RR\Shunt\Exception\RuntimeError;
-
-class SyntaxError extends Exception {}
-class ParseError extends Exception {}
+use RR\Shunt\Exception\ParseError;
+use RR\Shunt\Exception\SyntaxError;
 
 const T_NUMBER      = 1,  // eine nummer (integer / double)
       T_IDENT       = 2,  // konstante

@@ -5,7 +5,7 @@ namespace tests;
 use RR\Shunt\Parser;
 use RR\Shunt\Scanner;
 use RR\Shunt\Token;
-use RR\Shunt\SyntaxError;
+use RR\Shunt\Exception\SyntaxError;
 
 class ScannerTest extends \PHPUnit_Framework_TestCase
 {
@@ -301,7 +301,7 @@ class ScannerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RR\Shunt\SyntaxError
+     * @expectedException \RR\Shunt\Exception\SyntaxError
      */
     public function testForSyntaxErrorExceptionWithWrongInput()
     {
