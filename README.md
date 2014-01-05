@@ -31,7 +31,7 @@ echo $result; //3.0001220703125
 
 ## Authors
 
-Originally source code taken from (https://github.com/droptable/php-shunting-yard), some changes from (https://github.com/andig/php-shunting-yard). This is just a refactoring and repack for composer/packagist.
+Originally source code taken from https://github.com/droptable/php-shunting-yard, some changes from https://github.com/andig/php-shunting-yard. This is just a refactoring and repack for composer/packagist.
 
 ## Installation Via Composer
 
