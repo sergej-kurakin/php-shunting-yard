@@ -1,17 +1,18 @@
 {
-    "name": "andig/php-shunting-yard",
-    "type": "project",
-
-    "homepage": "https://github.com/andig/php-shunting-yard",
-    "description": "PSR-0 compatible version of https://github.com/droptable/php-shunting-yard",
+    "name": "sergej-kurakin/php-shunting-yard",
+    "type": "library",
+    "keywords": ["math","shunting yard", "equation"],
+    "homepage": "https://github.com/sergej-kurakin/php-shunting-yard",
+    "description": "Refactored repack of https://github.com/droptable/php-shunting-yard",
     "license": "MIT",
-    
     "autoload": {
         "psr-0": {
             "RR\\": "src/"
         }
     },
-
+    "require": {
+        "php": ">=5.3.3"
+    },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
     }
