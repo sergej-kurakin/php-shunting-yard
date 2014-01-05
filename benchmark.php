@@ -7,6 +7,7 @@ if (file_exists('vendor/autoload.php')) {
 }
 
 use RR\Shunt\Parser;
+use RR\Shunt\Scanner;
 
 function benchmark($term)
 {
@@ -22,7 +23,7 @@ function benchmark($term)
     }
 
     $totalExecutionTime = microtime(true) - $a;
-    print "native = $r : " . (round($totalExecutionTime, 6)) . "s. ".round(($totalExecutionTime/$iterations), 10)."s. per operation \n";
+    print "native  : " . (round($totalExecutionTime, 6)) . "s. ".round(($totalExecutionTime/$iterations), 10)."s. per operation \n";
 
     // calculations using parser
     $a = microtime(true);
@@ -32,7 +33,17 @@ function benchmark($term)
     }
 
     $totalExecutionTime = microtime(true) - $a;
-    print "parser = $r : " . (round($totalExecutionTime, 6)) . "s. ".round(($totalExecutionTime/$iterations), 10)."s. per operation\n\n";
+    print "parser  : " . (round($totalExecutionTime, 6)) . "s. ".round(($totalExecutionTime/$iterations), 10)."s. per operation\n";
+
+    // time taken by scanner
+    $a = microtime(true);
+
+    for ($i = 0; $i < $iterations; ++$i) {
+        $s = new Scanner($term);
+    }
+
+    $totalExecutionTime = microtime(true) - $a;
+    print "scanner : " . (round($totalExecutionTime, 6)) . "s. ".round(($totalExecutionTime/$iterations), 10)."s. per operation\n\n";
 }
 
 benchmark('1+1');
