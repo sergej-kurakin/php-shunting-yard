@@ -29,6 +29,29 @@ $result = Parser::parse($equation, $ctx);
 echo $result; //3.0001220703125
 ```
 
+## Authors
+
+Originally source code taken from (https://github.com/droptable/php-shunting-yard), some changes from (https://github.com/andig/php-shunting-yard). This is just a refactoring and repack for composer/packagist.
+
+## Installation Via Composer
+
+Define the following requirement in your composer.json file:
+
+```json
+{
+    "require": {
+        "sergej-kurakin/php-shunting-yard": "dev-master"
+    }
+}
+```
+
+Class loading
+
+```php
+require_once "vendor/autoload.php";
+```
+
+
 # MIT Licence
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
